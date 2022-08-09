@@ -168,3 +168,27 @@ const unsubscribe = store.subscribe(listener)
 ## 컨테이너 컴포넌트를 만들어 줍니다.
 
 1. CounterContainer 만들기.
+2. 컴포넌트를 리덕스와 연동하려면 connect 함수를 사용해야 한다.
+
+- connect(mapStateToProps, mapDispatchToProps)("연동 할 컴포넌트")
+
+* mapStateToProps는 리덕스 스토어 안의 상태정보를 컴포넌트의 props로 전달합니다.
+* mapDispatchToProps는 액션 생성 함수를 컴포넌트의 props로 넘겨주기 위해 사용합니다.
+* mapStateToProps 와 mapDispatchToProps 에서 반환하는 객체 내부의 값들은 컴포넌트의 props로 전달됩니다
+* mapStateToProps는 state를 파라미터로 받아오며 이 값은 현재 스토어가 가지고 있는 상태를 가리킨다.
+* mapDispatchToProps의 경우 store에 내장 함수 dispatch를 파라미터로 받아옵니다.
+
+- connect 함수를 사용할 때는 일반적으로 mapStateToProps와mapDispatchToProps를 미리 선언해 놓고 사용합니다. 하지만 connect 함수 내부에 익명 함수 형태로 선언해도 문제가 되지 않습니다. 어떻게 보면 코드가 더 깔끔해지는데 취향에 따라 다음과 같이 작성해도 됩니다.
+
+export default connect (
+state => ({
+number: state.counter.number
+}),
+dispatch => ({
+increase: () => dispatch(increase()),
+decrease: () => dispatch(decrease())
+}),
+)(CounterContainer)
+
+- 컴포넌트에서 액션을 디스패치하기 위해 각 액션 생성 함수를 호출하고 dispatch로 감싸는 작업이 조금 번거로울 수 있습니다. 특히 액션 생성 함수가 많아진다면 더더욱 그럴 것 입니다.
+- 이와 같은 경우에는 리덕스에서 제공하는 bindActionCreators 유틸 함수를 사용하면 됩니다.
