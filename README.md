@@ -127,4 +127,44 @@ const unsubscribe = store.subscribe(listener)
 - 리액트 프로젝트에서 리덕스를 사용할 때 가장 많이 사용하는 패턴은 프레젠테이셔널 컴포넌트와 컨테이너 컴포넌트를 분리하는 것
 - 여기서 프레젠테이션 컴포넌트란, 주로 상태관리가 이루어지지 않고 그저 props를 받아와서 화면에 ui를 보여 주기만 하는 컴포넌트를 말합니다.
 - 이와 달리 컨테이너 컴포넌트는 리덕스와 연동되어 있는 컴포넌트로 리덕스로부터 상태를 받아 오기도 하고 리덕스 스토어에 액션을 디스패치 하기도 합니다.
--
+- Ducks 패턴을 사용하여 코드를 작성하겠습니다.
+
+1. counter 모듈 작성하기
+
+- src 폴더 하위에 modules 폴더 생성 후 counter.js에 액션 타입 정의 및 액션 생성 함수를 정의한다.
+- 그 이후 counter.js 에 초기 상태 및 리듀서를 만들어 준다.
+- 일반 export 와 export default 는 불러오는 방식이 다르다.
+
+// export default
+
+- import counter from "../../counter"
+
+// export
+
+- import {increase, decrease} from "../../counter"
+
+// 둘 다 한 번에 불러오고 싶을 때
+
+- import counter, {increase, decrease} from "../../counter"
+
+2. todos 모듈 작성하기
+
+- modules 폴더 하위에 todos.js 를 만들어 준 후 액션 타입 정의 및 액션 생성 함수를 정의한다.
+- 그 이후 초기 상태 값과 리듀서 함수를 작성해준다.
+
+3. 루트 리듀서 만들기
+
+- 현재 리듀서를 여러개 만들었습니다 나중에 createStore 함수로 사용 하여 스토어를 만들 때는 리듀서를 하나만 사용해야 합니다. 그렇기 때문에 기존에 만들었던 리듀서를 하나로 합쳐 주어야 하는데요
+  이 작업은 리덕스에서 제공하는 combineReducers라는 유틸 함수를 사용하여 쉽게 처리할 수 있습니다.
+
+- modules 디렉터리에 index.js 를 만들어 줍니다.
+
+4. 리액트 애플리케이션에 리덕스를 적용해보겠습니다.
+
+- 가장 먼저 스토어를 생성해줍니다.
+- Provider 함수를 사용하여 프로잭트에 리덕스를 적용해줍니다.
+- redux devTools의 설치 및 적용을 해줍니다.
+
+## 컨테이너 컴포넌트를 만들어 줍니다.
+
+1. CounterContainer 만들기.
