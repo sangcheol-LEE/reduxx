@@ -1,30 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Todos from '../components/Todos';
-import { inputChange, insert, toggle, remove } from '../modules/todos';
 
-const TodosContainer = ({todoText, todos, inputChange, insert, toggle, remove}) => {
+const TodosContainer = ({ inputChange, insert, toggle, remove}) => {
+ const result = useSelector(state => state.todosReducer);
+ const {todoText, todos} = result
+
   return (
-    <Todos
-      todoText={todoText}
-      todos={todos}
-      onInputChange={inputChange}
-      onInsert={insert}
-      onToggle={toggle}
-      onRemove={remove}
-    />
+    <Todos todoText={todoText} todos={todos}/>
   );
 };
 
-export default connect(
-  state => ({
-    todoText: state.todosReducer.todoText,
-    todos : state.todosReducer.todos
-  }),
- {
-    inputChange,
-    insert,
-    toggle,
-    remove
-  },
-)(TodosContainer);
+export default TodosContainer
