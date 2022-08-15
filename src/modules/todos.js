@@ -8,14 +8,14 @@ const REMOVE = 'todos/REMOVE'; // todo를 지운다.
 
 // 액체 생성 함수 
 
-const changeInput = (input) => (
+export const changeInput = input => (
   {
     type : CHANGE_INPUT,
     input : input
   })
 
 let id = 3;
-const insert = (text) => (
+export const insert = text => (
   {
     type : INSERT,
     todo : {
@@ -25,13 +25,13 @@ const insert = (text) => (
     }
   });
 
-const toggle = (id) => (
+export const toggle = (id) => (
   {
     type : TOGGLE,
     id : id
   })
 
-const remove = (id) => (
+export const remove = (id) => (
   {
     type : REMOVE,
     id : id
@@ -66,7 +66,7 @@ const todoReducer = (state = initialState, action) => {
           ...state,
          todos: state.todos.concat(action.todo)
         }
-      case TOGGLE : 
+      case TOGGLE :
         return {
           ...state,
           todos : state.todos.map(todo => 

@@ -12,10 +12,10 @@ const CounterContainer = ({ number, increase, decrease }) => {
 
 export default connect(
   state => ({
-    number : state.counter.number,
+    number : state.counterReducer.number,
   }),
   dispatch => ({
-    increase : () => dispatch(increase()),
-    decrease : () => dispatch(decrease()),
+    increase: () => dispatch(increase()),
+    decrease: () => dispatch(decrease())
   }),
 )(CounterContainer);
