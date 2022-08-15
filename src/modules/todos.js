@@ -7,7 +7,6 @@ const REMOVE = 'todos/REMOVE'; // todo를 지운다.
 
 
 // 액체 생성 함수 
-
 export const changeInput = input => (
   {
     type : CHANGE_INPUT,
@@ -59,6 +58,7 @@ const todoReducer = (state = initialState, action) => {
     switch(action.type) {
       case CHANGE_INPUT :
         return {
+          ...state,
           input : action.input
         }
       case INSERT :

@@ -4,9 +4,9 @@ import React from 'react';
 const TodosItem = ({todo, onToggle, onRemove}) => {
   return (
     <div>
-      <input type="checkbox"/>
-      <span>text</span>
-      <button>remove</button>
+      <input type="checkbox" onClick={() => onToggle(todo.id)} checked={todo.done} readOnly={true}/>
+      <span style={{ textDecoration: todo.done ? "line-through" : "none"}}>{todo.text}</span>
+      <button onClick={() => onRemove(todo.id)}>remove</button>
     </div>
   )
 }
@@ -14,22 +14,30 @@ const TodosItem = ({todo, onToggle, onRemove}) => {
 
 
 
-const Todos = ({input, todos, onChangeInput, onInsert, onToggle, onRemove}) => {
+const Todos = ({ input,todos, onChangeInput, onInsert, onToggle, onRemove }) => {
 
   const onSubmit = e => {
-    e.preventDefault()
+    e.preventDefault();
+    onInsert(input);
+    onChangeInput("");
   }
+  const onChange = e => onChangeInput(e.target.value)
 
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input />
+        <input value={input} onChange={onChange} />
         <button type="submit">add</button>
       </form>
       <div>
-        <TodosItem />
-        <TodosItem />
-        <TodosItem />
+        {todos.map(todo => (
+          <TodosItem
+            todo={todo}
+            key={todo.id}
+            onToggle={onToggle}
+            onRemove={onRemove}
+          />
+        ))}
       </div>
     </div>
   );
