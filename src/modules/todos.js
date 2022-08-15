@@ -1,84 +1,89 @@
-// 액션 객체 정의
-const CHANGE_INPUT = 'todos/CHANGE_INPUT';
+// action Obj
+const INPUT_CHANGE = 'todos/INPUT_CHANGE';
 const INSERT = 'todos/INSERT';
 const TOGGLE = 'todos/TOGGLE';
-const REMOVE = "todos/REMOVE";
+const REMOVE = 'todos/REMOVE';
 
-// 액션 생성 함수
 
-export const changeInput = input => (
-  {
-    type : CHANGE_INPUT,
-    input: input
-  }
-)
-let id = 3;
-export const insert = text => (
+// make action function
+export const inputChange = todoText => (
     {
-      type: INSERT,
-      todo : {
-        id: id++,
-        text: text,
-        done: false
-      }
+      type : INPUT_CHANGE,
+      todoText: todoText
     }
   )
+
+let id = 3;
+export const insert = text => (
+  {
+    type : INSERT,
+    todo : {
+      id: id++,
+      text : text,
+      done : false
+    }
+  }
+)
+
 export const toggle = id => (
   {
     type: TOGGLE,
     id : id
   }
 )
+
 export const remove = id => (
   {
-    type: REMOVE,
+    type : REMOVE,
     id : id
   }
 )
 
-// 초기상태정의
+// initialState
 
 const initialState = {
-  input : "",
+  todoText : "",
   todos : [
     {
-      id: 1,
-      text: "리덕스 기초",
-      done: false
+      id : 1,
+      text : "나는 동료들이 필요로 하는 개발자가 된다.",
+      done : true
     },
     {
       id: 2,
-      text: "결국은 계속 반복 숙달",
-      done: false
+      text : "나 이상철은 백만장자 마인드를 가졌고, 나는 부자가 될 것이다.",
+      done : false
     }
   ]
 }
 
-const todoReducer = (state = initialState, action) => {
+
+// Reducer 
+const todosReducer = (state = initialState, action) => {
   switch(action.type) {
-    case CHANGE_INPUT : 
+    case INPUT_CHANGE :
       return {
         ...state,
-        input: action.input
+        todoText : action.todoText
       }
     case INSERT :
-        return {
-          ...state,
-          todos : state.todos.concat(action.todo)
-        }
-    case TOGGLE : 
-        return {
-          ...state,
-          todos : state.todos.map(todo => todo.id === action.id ? {...todo, done : !todo.done} : todo )
-        }
+      return {
+        ...state,
+        todos : state.todos.concat(action.todo)
+      }
+    case TOGGLE :
+      return {
+        ...state,
+        todos: state.todos.map(todo => todo.id === action.id ? {...todo, done : !todo.done}: todo)
+      }
     case REMOVE :
-        return {
-          ...state,
-          todos : state.todos.filter(todo => todo.id !== action.id)
-        }
+      return {
+        ...state,
+        todos : state.todos.filter(todo => todo.id !== action.id)
+      }
     default : 
       return state
   }
 }
 
-export default todoReducer
+export default todosReducer

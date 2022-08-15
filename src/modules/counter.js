@@ -1,16 +1,23 @@
-const INCREASE = "counter/INCREASE";
-const DECREASE = "counter/DECREASE";
+// action Obj
+const INCREASE = 'counter/INCREASE';
+const DECREASE = 'counter/DECREASE';
+
+// make action function
 
 export const increase = () => ({type : INCREASE});
 export const decrease = () => ({type : DECREASE});
+
+
+// initialState
 
 const initialState = {
   number : 0
 }
 
+// Reducer
 
 const counterReducer = (state = initialState, action) => {
-  switch (action.type) {
+  switch(action.type) {
     case INCREASE :
       return {
         number : state.number + 1
@@ -24,4 +31,4 @@ const counterReducer = (state = initialState, action) => {
   }
 }
 
-export default counterReducer
+export default counterReducer;

@@ -1,41 +1,30 @@
 import React from 'react';
+import TodoItem from './TodoItem';
 
-const Todos = ({input, todos,onChangeInput, onRemove, onToggle, onInsert}) => {
+const Todos = ({todoText, todos, onInputChange, onInsert, onToggle, onRemove}) => {
+  
   const handleSubmit = e => {
     e.preventDefault()
-    onInsert(input)
-    onChangeInput("")
+    onInsert(todoText)
+    onInputChange("")
+    console.log("good")
   }
 
-  const handleChange = (e) => onChangeInput(e.target.value)
+  const handleChange = e => onInputChange(e.target.value);
   return (
     <div>
       <form onSubmit={handleSubmit}>
-          <input value={input} onChange={handleChange}/>
-          <button type="submit" >add</button>
+        <input value={todoText} onChange={handleChange}/>
+        <button type="submit">Add</button>
       </form>
-      {todos.map(todo => (
-        <TodoItem
-          todo={todo}
-          key={todo.id}
-          onRemove={onRemove}
-          onToggle={onToggle}
-        />
-      ))}
+
+      <div>
+        {todos.map(todo => 
+            <TodoItem todo={todo} key={todo.id} onToggle={onToggle} onRemove={onRemove}/>
+          )}
+      </div>
     </div>
   );
 };
-
-
-
-const TodoItem = ({todo, onToggle, onRemove}) => {
-  return (
-    <div>
-      <input type="checkbox" onClick={() => onToggle(todo.id)} checked={todo.done} readOnly={true}/>
-      <span style={{textDecoration: todo.done ? "line-through" : "none"}}>{todo.text}</span>
-      <button onClick={()=> onRemove(todo.id)}>remove</button>
-    </div>
-  )
-}
 
 export default Todos;
